@@ -15,10 +15,15 @@ const unitVideos = Array.from(document.querySelectorAll(".unit-video"), panel =>
   player: panel.querySelector("video")
 }));
 
+const unitPlan = document.getElementById("unit-plan-211");
+const planDialog = document.getElementById("plan-dialog-211");
+unitPlan.querySelector(".plan-preview").addEventListener("click", () => planDialog.showModal());
+
 for (const button of typeButtons) {
   button.addEventListener("click", () => {
     const type = button.dataset.type;
     gallery.hidden = type !== "76";
+    unitPlan.hidden = type !== "211";
     for (const { panel, player } of unitVideos) {
       panel.hidden = panel.id !== `unit-video-${type.toLowerCase()}`;
       if (panel.hidden) player.pause();
@@ -32,6 +37,10 @@ for (const button of typeButtons) {
     if (type === "76") gallery.scrollIntoView({ block: "start" });
     const selectedVideo = unitVideos.find(({ panel }) => !panel.hidden);
     if (selectedVideo) selectedVideo.panel.scrollIntoView({ block: "start" });
+    if (!unitPlan.hidden) {
+      unitPlan.scrollIntoView({ block: "start" });
+      planDialog.showModal();
+    }
   });
 }
 

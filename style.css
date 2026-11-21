@@ -175,6 +175,44 @@ nav a:hover, .header-contact:hover { color: var(--sand); }
 .gallery-thumbs button:focus-visible { outline-offset: -2px; }
 .gallery-thumbs img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .unit-gallery .note { margin-top: .55rem; }
+.plan-preview {
+  display: block;
+  width: min(100%, 32rem);
+  margin-top: .9rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  cursor: zoom-in;
+}
+.plan-preview img { display: block; width: 100%; height: auto; }
+.plan-preview span { display: block; padding: .7rem; font-weight: 700; }
+.plan-dialog {
+  width: min(calc(100% - 1.5rem), 76rem);
+  max-height: calc(100dvh - 1.5rem);
+  padding: clamp(.6rem, 2vw, 1.2rem);
+  border: 0;
+  background: var(--white);
+  color: var(--ink);
+}
+.plan-dialog::backdrop { background: #10222dcc; }
+.plan-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: .8rem; }
+.plan-dialog-header h3 { margin: 0; font: 650 clamp(1rem, 3vw, 1.5rem)/1.35 var(--serif); }
+.plan-dialog-header button {
+  min-height: 2.75rem;
+  padding: .4rem .8rem;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  cursor: pointer;
+}
+.plan-dialog > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100dvh - 7rem);
+  object-fit: contain;
+}
 
 .callback-form { display: grid; gap: .85rem; max-width: 28rem; }
 .callback-form h3 { font: 650 clamp(1.35rem, 2.8vw, 1.75rem)/1.4 var(--serif); }
