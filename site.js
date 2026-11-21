@@ -1,3 +1,18 @@
+const heroPicker = document.querySelector(".hero-picker");
+const heroButtons = Array.from(heroPicker.querySelectorAll("[data-hero-view]"));
+const heroImages = document.querySelectorAll("[data-hero-image]");
+
+for (const button of heroButtons) {
+  button.addEventListener("click", () => {
+    const view = button.dataset.heroView;
+    for (const image of heroImages) image.hidden = image.dataset.heroImage !== view;
+    for (const control of heroButtons) {
+      control.setAttribute("aria-pressed", String(control === button));
+    }
+  });
+}
+heroPicker.hidden = false;
+
 const units = {
   "76": { exclusive: "76.6326", contract: "150.4997", supply: "208" },
   "84A": { exclusive: "84.9878", contract: "166.5946", supply: "208" },

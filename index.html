@@ -13,8 +13,8 @@
   <meta property="og:title" content="청라 더리브 티아모 까사 오피스텔 | 분양·방문 상담">
   <meta property="og:description" content="인천 청라동 157-11, 청라 더리브 티아모 까사 오피스텔. 76㎡ 사진, 84A·84B 실내 영상, 211㎡ 평면도, 분양·방문 상담.">
   <meta property="og:url" content="https://wanjunsim3-droid.github.io/cheongna-theliv-tiamo/">
-  <meta property="og:image" content="https://wanjunsim3-droid.github.io/cheongna-theliv-tiamo/cheongna-concept.webp">
-  <meta property="og:image:alt" content="청라 더리브 티아모 까사 안내 페이지의 AI 연출 이미지">
+  <meta property="og:image" content="https://wanjunsim3-droid.github.io/cheongna-theliv-tiamo/images/hero/exterior.webp">
+  <meta property="og:image:alt" content="해 질 무렵 바라본 청라 더리브 티아모 까사 단지 전경 투시도">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
 {
@@ -41,8 +41,8 @@
   }
 }
   </script>
-  <link rel="stylesheet" href="style.css">
-  <script src="site.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=hero-3">
+  <script src="site.js?v=hero-3" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">본문 바로가기</a>
@@ -57,7 +57,11 @@
   </header>
   <main id="main">
     <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="hero-visual" aria-hidden="true"></div>
+      <div class="hero-visual" id="hero-views">
+        <img class="hero-image" data-hero-image="exterior" src="images/hero/exterior.webp" alt="해 질 무렵 바라본 청라 더리브 티아모 까사 단지 전경 투시도" fetchpriority="high">
+        <img class="hero-image" data-hero-image="courtyard" src="images/hero/courtyard.webp" alt="커낼웨이와 어린이 놀이터가 보이는 단지 옥외 휴게공간 투시도" loading="lazy" decoding="async" hidden>
+        <img class="hero-image" data-hero-image="retail" src="images/hero/retail.webp" alt="도로에서 이어지는 단지 상가와 보행로를 위에서 내려다본 투시도" loading="lazy" decoding="async" hidden>
+      </div>
       <div class="wrap hero-inner">
         <h1 id="hero-title">청라 더리브<br>티아모 <em>까사</em></h1>
         <p class="hero-desc">청라 커낼웨이 생활권 오피스텔 · 523실</p>
@@ -66,7 +70,14 @@
           <a class="button ghost" href="#types">타입 보기</a>
         </div>
       </div>
-      <div class="wrap image-note">AI 연출 이미지 · 실제 건물 및 조망과 다를 수 있습니다.</div>
+      <div class="wrap hero-footer">
+        <div class="hero-picker" role="group" aria-label="대표 이미지 선택" hidden>
+          <button type="button" data-hero-view="exterior" aria-controls="hero-views" aria-pressed="true">단지 외관</button>
+          <button type="button" data-hero-view="courtyard" aria-controls="hero-views" aria-pressed="false">옥외 휴게공간</button>
+          <button type="button" data-hero-view="retail" aria-controls="hero-views" aria-pressed="false">상가 출입구</button>
+        </div>
+        <p class="image-note">분양 안내용 투시도 · 실제 시공·조망 및 주변 시설과 다를 수 있습니다.</p>
+      </div>
     </section>
     <section id="overview" class="overview" aria-labelledby="overview-title">
       <div class="wrap">

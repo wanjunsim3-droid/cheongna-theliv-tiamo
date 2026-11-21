@@ -31,9 +31,13 @@ nav { display: flex; gap: clamp(1.2rem, 4vw, 3.5rem); font-size: .94rem; }
 nav a, .header-contact { padding-block: .45rem; }
 nav a:hover, .header-contact:hover { color: var(--sand); }
 .header-contact { font-weight: 650; color: var(--sand); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.hero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: clamp(32rem, 75svh, 49rem); background: #182d3b; color: var(--white); }
-.hero-visual { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #0b1925fa 0%, #0b1925e8 21%, #0b192566 58%, #0b19251a 100%), linear-gradient(0deg, #0a1824bb, transparent 28%), url("cheongna-concept.webp") 63% 52% / cover no-repeat; }
-.hero-inner { padding-block: 5.5rem 6.5rem; }
+.hero { position: relative; isolation: isolate; display: grid; grid-template-rows: 1fr auto; align-items: center; min-height: clamp(32rem, 75svh, 49rem); background: #182d3b; color: var(--white); }
+.hero-visual, .hero-visual::after { position: absolute; inset: 0; }
+.hero-visual { z-index: -1; overflow: hidden; }
+.hero-visual::after { content: ""; background: linear-gradient(90deg, #0b1925ed, #0b1925c7 25%, #0b192548 60%, transparent 90%), linear-gradient(0deg, #0a1824ef, transparent 29%); }
+.hero-image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 62% 46%; }
+.hero-image[hidden] { display: none; }
+.hero-inner { padding-block: 4.5rem 3rem; }
 .eyebrow { font-size: .82rem; font-weight: 750; letter-spacing: .19em; color: var(--bronze); }
 .hero .eyebrow, .consult .eyebrow { color: var(--sand); }
 .hero h1 { margin-top: .85rem; font: 620 clamp(3rem, 7vw, 6.15rem)/1.12 var(--serif); letter-spacing: -.075em; }
@@ -45,7 +49,13 @@ nav a:hover, .header-contact:hover { color: var(--sand); }
 .primary:hover { background: #f4dcae; }
 .ghost { border-color: #ffffff83; color: var(--white); }
 .ghost:hover { background: #ffffff25; }
-.image-note { position: absolute; inset: auto 0 1rem; text-align: right; color: #faf7ef; font-size: .8rem; text-shadow: 0 1px 4px #091722; }
+.hero-footer { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: .55rem 1rem; padding-bottom: 1.1rem; }
+.hero-picker { display: flex; flex-wrap: wrap; gap: .35rem; }
+.hero-picker[hidden] { display: none; }
+.hero-picker button { min-height: 2.75rem; padding: .45rem .8rem; border: 1px solid #fff8; border-radius: .25rem; background: #142733e8; color: #fff; font: inherit; font-size: .84rem; cursor: pointer; }
+.hero-picker button[aria-pressed="true"] { background: var(--sand); color: var(--ink); border-color: var(--sand); font-weight: 700; }
+.hero-picker button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.image-note { margin: 0; color: #faf7ef; font-size: .76rem; text-shadow: 0 1px 4px #091722; }
 .overview { padding-block: 3.35rem 3.85rem; border-bottom: 1px solid var(--line); }
 .section { padding-block: clamp(4rem, 8vw, 7rem); }
 .section-heading h2 { margin-top: .38rem; font: 650 clamp(2.1rem, 5vw, 3.35rem)/1.26 var(--serif); letter-spacing: -.065em; }
@@ -97,7 +107,7 @@ nav a:hover, .header-contact:hover { color: var(--sand); }
 @media (max-width: 760px) {
   .wrap { width: calc(100% - 2.5rem); }
   .hero { min-height: 34rem; }
-  .hero-visual { background-position: 70% center; }
+  .hero-image { object-position: 62% center; }
   .metrics { grid-template-columns: 1fr 1fr; row-gap: 1.4rem; }
   .metrics > div:nth-child(3) { padding-left: 0; border-left: 0; }
   .type-layout { grid-template-columns: 1fr; }
@@ -110,8 +120,8 @@ nav a:hover, .header-contact:hover { color: var(--sand); }
   nav { grid-row: 2; grid-column: 1 / -1; gap: 1.55rem; }
   nav a { padding-block: .5rem; }
   .hero { min-height: clamp(31rem, 76svh, 39rem); }
-  .hero-inner { padding-block: 4rem 5.5rem; }
-  .hero-visual { background-image: linear-gradient(90deg, #0b1925ed, #0b192574 77%, #0b192538), linear-gradient(0deg, #0b1925ba, transparent 30%), url("cheongna-concept.webp"); }
+  .hero-inner { padding-block: 3.2rem 2rem; }
+  .hero-visual::after { background: linear-gradient(90deg, #0b1925e8, #0b192579 75%, #0b192537), linear-gradient(0deg, #0b1925e8, transparent 35%); }
   .type-detail { min-height: auto; grid-template-columns: 1fr; gap: .85rem; }
   .type-area { font-size: clamp(2.8rem, 13vw, 4rem); }
   .footer { padding-bottom: 6rem; }
