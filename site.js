@@ -13,6 +13,39 @@ for (const button of heroButtons) {
 }
 heroPicker.hidden = false;
 
+const musicControls = document.querySelector(".background-music");
+const musicTrack = musicControls.querySelector("audio");
+const musicButton = musicControls.querySelector(".music-button");
+const musicLabel = musicControls.querySelector(".music-label");
+const musicStatus = musicControls.querySelector(".music-status");
+
+function updateMusicLabel() {
+  musicLabel.textContent = musicTrack.paused ? "배경음악 재생" : "배경음악 일시정지";
+}
+
+musicTrack.addEventListener("play", updateMusicLabel);
+musicTrack.addEventListener("pause", updateMusicLabel);
+musicTrack.addEventListener("error", updateMusicLabel);
+musicButton.addEventListener("click", async () => {
+  musicStatus.textContent = "";
+  if (!musicTrack.paused) {
+    musicTrack.pause();
+    return;
+  }
+  try {
+    await musicTrack.play();
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      musicStatus.textContent = "음악을 재생할 수 없습니다. 잠시 후 다시 눌러 주세요.";
+    }
+  }
+});
+document.addEventListener("play", event => {
+  if (event.target instanceof HTMLVideoElement) musicTrack.pause();
+}, true);
+musicControls.hidden = false;
+musicTrack.play().catch(() => { /* Visitors can start playback with the button. */ });
+
 const units = {
   "76": { exclusive: "76.6326", contract: "150.4997", supply: "208" },
   "84A": { exclusive: "84.9878", contract: "166.5946", supply: "208" },

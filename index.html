@@ -41,8 +41,8 @@
   }
 }
   </script>
-  <link rel="stylesheet" href="style.css?v=hero-3">
-  <script src="site.js?v=hero-3" defer></script>
+  <link rel="stylesheet" href="style.css?v=music-1">
+  <script src="site.js?v=music-1" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">본문 바로가기</a>
@@ -68,6 +68,14 @@
         <div class="actions">
           <a class="button primary" href="#consult">상담 신청</a>
           <a class="button ghost" href="#types">타입 보기</a>
+        </div>
+        <div class="background-music" hidden>
+          <button class="music-button" type="button" aria-controls="background-music-track">
+            <span class="music-note" aria-hidden="true">♪</span>
+            <span class="music-label">배경음악 재생</span>
+          </button>
+          <p class="music-status" role="status"></p>
+          <audio id="background-music-track" src="audio/courtyard-piano.mp3" preload="none" loop></audio>
         </div>
       </div>
       <div class="wrap hero-footer">

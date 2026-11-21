@@ -49,6 +49,13 @@ nav a:hover, .header-contact:hover { color: var(--sand); }
 .primary:hover { background: #f4dcae; }
 .ghost { border-color: #ffffff83; color: var(--white); }
 .ghost:hover { background: #ffffff25; }
+.background-music { display: flex; align-items: center; flex-wrap: wrap; gap: .25rem .65rem; margin-top: .85rem; }
+.background-music[hidden] { display: none; }
+.music-button { display: inline-flex; align-items: center; gap: .4rem; min-height: 2.75rem; padding: .4rem .75rem; border: 1px solid #fff8; border-radius: .25rem; background: #142733e8; color: #fff; font: inherit; font-size: .84rem; cursor: pointer; }
+.music-button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.music-note { color: var(--sand); font-size: 1rem; line-height: 1; }
+.music-status { margin: 0; color: #faf7ef; font-size: .78rem; }
+.music-status:empty { display: none; }
 .hero-footer { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: .55rem 1rem; padding-bottom: 1.1rem; }
 .hero-picker { display: flex; flex-wrap: wrap; gap: .35rem; }
 .hero-picker[hidden] { display: none; }
