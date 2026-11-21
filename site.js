@@ -9,8 +9,6 @@ const typeButtons = Array.from(document.querySelectorAll("[data-type]"));
 const fields = Object.fromEntries(
   ["exclusive", "contract", "supply"].map(field => [field, document.getElementById(field)])
 );
-const email = document.getElementById("email-link");
-const emailBase = email.getAttribute("href");
 
 for (const button of typeButtons) {
   button.addEventListener("click", () => {
@@ -22,8 +20,6 @@ for (const button of typeButtons) {
     for (const [field, element] of Object.entries(fields)) {
       element.textContent = units[type][field];
     }
-    const message = `관심 타입: ${type}형\n문의 내용: \n방문 희망일(선택): `;
-    email.setAttribute("href", `${emailBase}&body=${encodeURIComponent(message)}`);
     if (type === "76") gallery.scrollIntoView({ block: "start" });
   });
 }
@@ -92,3 +88,31 @@ nextPhoto.addEventListener("click", () => showPhoto(photoIndex + 1));
 previousPhoto.hidden = false;
 nextPhoto.hidden = false;
 thumbnails.hidden = false;
+
+const callbackForm = document.querySelector(".callback-form");
+const endpoint = callbackForm.dataset.endpoint;
+const callbackSubmit = callbackForm.querySelector('button[type="submit"]');
+const callbackStatus = document.getElementById("callback-status");
+const googleEndpoint = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/;
+
+if (googleEndpoint.test(endpoint)) {
+  callbackForm.action = endpoint;
+  callbackSubmit.disabled = false;
+  callbackStatus.textContent = "";
+}
+
+callbackForm.addEventListener("submit", event => {
+  if (callbackSubmit.disabled || !googleEndpoint.test(endpoint)) {
+    event.preventDefault();
+    return;
+  }
+  callbackSubmit.disabled = true;
+  callbackStatus.textContent = "상담 신청을 전송하고 있습니다.";
+});
+
+window.addEventListener("pageshow", () => {
+  if (googleEndpoint.test(endpoint)) {
+    callbackSubmit.disabled = false;
+    callbackStatus.textContent = "";
+  }
+});
