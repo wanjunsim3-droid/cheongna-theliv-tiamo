@@ -205,3 +205,14 @@ nav a:hover, .header-contact:hover { color: var(--sand); }
 .callback-form button:disabled { opacity: .58; cursor: default; }
 .callback-status { color: #e3eae8; font-size: .875rem; }
 .callback-status:empty { display: none; }
+
+.unit-video video {
+  display: block;
+  width: 100%;
+  max-width: 60rem;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin-top: .9rem;
+  background: var(--deeper);
+  object-fit: contain;
+}

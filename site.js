@@ -10,10 +10,15 @@ const fields = Object.fromEntries(
   ["exclusive", "contract", "supply"].map(field => [field, document.getElementById(field)])
 );
 
+const videoPanel = document.getElementById("unit-video-84a");
+const unitVideo = videoPanel.querySelector("video");
+
 for (const button of typeButtons) {
   button.addEventListener("click", () => {
     const type = button.dataset.type;
     gallery.hidden = type !== "76";
+    videoPanel.hidden = type !== "84A";
+    if (videoPanel.hidden && !unitVideo.paused) unitVideo.pause();
     for (const candidate of typeButtons) {
       candidate.setAttribute("aria-pressed", String(candidate === button));
     }
@@ -21,6 +26,7 @@ for (const button of typeButtons) {
       element.textContent = units[type][field];
     }
     if (type === "76") gallery.scrollIntoView({ block: "start" });
+    if (type === "84A") videoPanel.scrollIntoView({ block: "start" });
   });
 }
 
