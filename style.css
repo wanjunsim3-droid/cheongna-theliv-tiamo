@@ -254,3 +254,15 @@ nav a:hover, .header-contact:hover { color: var(--sand); }
   background: var(--deeper);
   object-fit: contain;
 }
+
+.disclosure { margin-top: 1.5rem; max-width: 48rem; border-top: 1px solid var(--line); padding-top: .8rem; }
+.disclosure summary { cursor: pointer; font-weight: 700; }
+.disclosure-list { display: grid; gap: .45rem; margin: .9rem 0; }
+.disclosure-list > div { display: grid; grid-template-columns: minmax(8rem, 1fr) 2fr; gap: .6rem; }
+.disclosure-list dt { font-weight: 650; }
+.disclosure-list dd { overflow-wrap: anywhere; }
+.disclosure p + p { margin-top: .35rem; }
+.disclosure a, .callback-privacy a { text-decoration: underline; text-underline-offset: .2em; }
+@media (max-width: 500px) {
+  .disclosure-list > div { grid-template-columns: 1fr; gap: 0; }
+}
