@@ -161,12 +161,92 @@ const callbackForm = document.querySelector(".callback-form");
 const endpoint = callbackForm.dataset.endpoint;
 const callbackSubmit = callbackForm.querySelector('button[type="submit"]');
 const callbackStatus = document.getElementById("callback-status");
+const measurementConsent = document.getElementById("callback-measurement");
 const googleEndpoint = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/;
 
 if (googleEndpoint.test(endpoint)) {
   callbackForm.action = endpoint;
   callbackSubmit.disabled = false;
   callbackStatus.textContent = "";
+}
+
+// Load the pixel only after a consented submission has been accepted and cleared.
+function measureAcceptedConsultation(eventId) {
+  if (!window.oaiq) {
+    const queue = function () {
+      queue.q.push(arguments);
+    };
+    queue.q = [];
+    window.oaiq = queue;
+    window.oaiq("consent", true);
+    window.oaiq("init", { pixelId: "Ng6vnXaZqHZejx3QaiQNzt" });
+
+    const sdk = document.createElement("script");
+    sdk.async = true;
+    sdk.src = "https://bzrcdn.openai.com/sdk/oaiq.min.js";
+    document.head.append(sdk);
+  }
+  window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: eventId, opt_out: true });
+}
+
+
+async function canReadConsultationReceipt() {
+  try {
+    const receiptURL = new URL(endpoint);
+    receiptURL.searchParams.set("format", "receipt");
+    const response = await fetch(receiptURL, {
+      credentials: "omit", cache: "no-store", signal: AbortSignal.timeout(6000)
+    });
+    return response.ok && (await response.json()).status === "ready";
+  } catch {
+    return false;
+  }
+}
+
+let receiptCheck;
+measurementConsent.addEventListener("change", async () => {
+  if (!measurementConsent.checked || !googleEndpoint.test(endpoint)) return;
+  receiptCheck = canReadConsultationReceipt();
+  if (!(await receiptCheck) && measurementConsent.checked && !callbackSubmit.disabled) {
+    measurementConsent.checked = false;
+    callbackStatus.textContent = "광고 성과 측정을 사용할 수 없습니다. 상담은 신청할 수 있습니다.";
+  }
+});
+
+async function submitMeasuredConsultation() {
+  const fields = new URLSearchParams(new FormData(callbackForm));
+  fields.set("format", "receipt");
+
+  // Preserve normal form submission if this browser cannot read the API response.
+  if (!(await (receiptCheck || canReadConsultationReceipt()))) {
+    HTMLFormElement.prototype.submit.call(callbackForm);
+    return;
+  }
+
+  let receipt;
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST", body: fields, credentials: "omit", signal: AbortSignal.timeout(20000)
+    });
+    if (!response.ok) throw new Error("Unexpected response");
+    receipt = await response.json();
+  } catch {
+    callbackStatus.textContent = "접수 결과를 확인하지 못했습니다. 중복 신청을 피하려면 전화로 접수 여부를 확인해 주세요.";
+    return;
+  }
+
+  if (receipt.status === "accepted") {
+    callbackForm.reset();
+    callbackStatus.textContent = "상담 신청을 접수했습니다. 남겨주신 번호로 연락드리겠습니다.";
+    if (typeof receipt.eventId === "string" && receipt.eventId) {
+      measureAcceptedConsultation(receipt.eventId);
+    }
+  } else {
+    callbackStatus.textContent = receipt.status === "invalid"
+      ? "이름과 전화번호를 확인하고 다시 신청해 주세요."
+      : "상담 신청을 완료하지 못했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.";
+  }
+  callbackSubmit.disabled = false;
 }
 
 callbackForm.addEventListener("submit", event => {
@@ -176,11 +256,16 @@ callbackForm.addEventListener("submit", event => {
   }
   callbackSubmit.disabled = true;
   callbackStatus.textContent = "상담 신청을 전송하고 있습니다.";
+  if (measurementConsent.checked) {
+    event.preventDefault();
+    submitMeasuredConsultation();
+  }
 });
 
 window.addEventListener("pageshow", () => {
   if (googleEndpoint.test(endpoint)) {
     callbackSubmit.disabled = false;
     callbackStatus.textContent = "";
+    receiptCheck = undefined;
   }
 });
